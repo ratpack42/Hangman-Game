@@ -1,7 +1,7 @@
 //Global Scope Vars Available//
 
 //Words available to guess
-var words = ['Manchester United', 'Chelsea', 'Arsenal', 'Liverpool', 'Tottenham', 'Leicester', 'Everton', 'West Ham', 'Sunderland', 'Crysal Palace', 'Swansea City', 'Southampton', 'Stoke City', 'West Bromich', 'Bournemouth', 'Newcastle united', 'Watford', 'Hull City', 'Middesbrough', 'Burnley', 'Huddersfield Town', 'Norwich City', 'Fulham', 'Cardiff City', 'Brighton Hove Albion'];
+var words = ['Manchester United', 'Chelsea', 'Arsenal', 'Liverpool', 'Tottenham', 'Leicester', 'Everton', 'West Ham', 'Sunderland', 'Crysal Palace', 'Swansea City', 'Southampton', 'Stoke City', 'West Bromich', 'Bournemouth', 'Newcastle United', 'Watford', 'Hull City', 'Middesbrough', 'Burnley', 'Huddersfield Town', 'Norwich City', 'Fulham', 'Cardiff City', 'Brighton Hove Albion'];
 
 
 //Letter Choices Available//
@@ -17,62 +17,42 @@ var guessedLetters = [];
 var userGuess = null;
 var team = Math.floor(Math.random() * words.length);
 console.log(team);
-//Let's the Computer Select Random Letters//
-
-
+//Let's the Computer Select Random Words//
+compGuess = words[team];
+//redeclare the variable to lowercase//
+compGuess = compGuess.toLowerCase();
+console.log(compGuess);
+//Change compGuess so adds spaces between each word//
+compGuess = compGuess.split('').join(' ');
+console.log(compGuess);
+//Replaces word with spaces to hide the word//
+var hangman =compGuess.replace(/[a-z]/gi, "_ ");
+console.log(hangman);
 
 //Listens for event
-	document.onkeyup = function(event) {
-		compGuess = words[team];
-		console.log(words);
-//Change userGuess to Event.key	
-		userGuess = event.key;
-		console.log(userGuess);
-//Make guesses go down by 1
-		guessesLeft = guessesLeft - 1;
-	
+document.onkeyup = function(event) {
+	userGuess=event.key
+	console.log(userGuess);
 
+//Create for loop to list all the characters within the word within the word. 	
+	 for (var i = 0; i < compGuess.length; i++) {
+        console.log(compGuess[i]);
+        if(userGuess===compGuess[i]) {
+        	hangman=hangman.replace(hangman[i], compGuess[i]);
+        	console.log(hangman);
 
-	//Lose Condition is when userGuesses equals 9
-		guessedLetters.push(userGuess);
-		if (guessesLeft === 0) {
-			guessesLeft = 9;
-			guessedLetters = [];
-			losses = losses +1;
-			document.getElementById("losses").innerHTML ="Losses: " +losses;
-	//Resets picks random letter again
-			team = Math.floor(Math.random() * words.length);
-			// var compGuess = compChoice[Math.floor(Math.random() * compChoice.length)];	
-		}
-
-
-	// When user presses a key, it records it and saves to userGuess
-		var soFar = document.getElementById("soFar");
-		soFar.innerHTML = "Your guesses so far: " + guessedLetters;
-
-	//Make Guesses Left appear in HTML
-		document.getElementById("guessLeft").innerHTML ="Guesses Left: " +guessesLeft;
-
-	//Win Coditions - When computer choice equals user condition
-		if (compGuess === userGuess) {
-			//("YOU WIN");
-			wins = wins + 1;
-			document.getElementById("wins").innerHTML ="Wins: " + wins;
-			guessesLeft= 9;
-			guessedLetters = [];
-	//Resets picks random letter
-			team = Math.floor(Math.random() * words.length);
-
-		}
-
+        }
+      }
 }
 
+//Show word for now while working on HTML
+document.getElementById("currentWord").innerHTML="Current Word " +hangman;
 
 
+//Replace every character with an underscore account for spaces
 
-
-
-
-
-
-
+	//var i = 0, strLength = str.length;
+ 
+	// for(i; i < strLength; i++) {
+ 
+ // /	str = str.replace(" ", "_");
